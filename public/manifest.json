@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Mia Assistant",
+    "version": "1.0.0",
+    "description": "Mia Meeting Assistant Extension",
+    "action": {
+        "default_title": "Open Mia Assistant"
+    },
+    "background": {
+        "service_worker": "assets/background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "storage",
+        "cookies",
+        "activeTab",
+        "scripting",
+        "tabs"
+    ],
+    "host_permissions": [
+        "http://localhost:3000/*",
+        "http://localhost:8080/*",
+        "https://getmia.live/*",
+        "https://console.getmia.live/*",
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content-loader.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

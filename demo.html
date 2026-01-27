@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mia Extension Drag Demo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f2f5;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        /* Mimic the instructions on the page */
+        .instructions {
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #333;
+        }
+
+        /* The Overlay Container */
+        #mia-overlay {
+            position: fixed;
+            width: 350px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            z-index: 99999;
+            /* Initial Position */
+            top: 80px;
+            left: calc(100vw - 380px);
+        }
+
+        /* The Draggable Header */
+        .handle {
+            background-color: #f3f4f6;
+            padding: 12px;
+            cursor: move; /* Fallback */
+            cursor: grab;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .handle:active {
+            cursor: grabbing;
+        }
+
+        .handle-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .handle-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #2563eb; /* Blue mock icon */
+            border-radius: 50%;
+        }
+
+        .content {
+            height: 300px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="instructions">
+        <h1>Drag Demonstration</h1>
+        <p>This page demonstrates how the Mia Assistant overlay works.</p>
+        <ul>
+            <li><strong>Method:</strong> Click and hold the gray header bar (where it says "Mia Assistant").</li>
+            <li><strong>Action:</strong> Move your mouse to drag the window.</li>
+        </ul>
+        <p><em>(I am simulating this action for you now)</em></p>
+    </div>
+
+    <!-- Mimicking the Overlay Component -->
+    <div id="mia-overlay">
+        <div class="handle" id="mia-handle">
+            <div class="handle-title">
+                <div class="handle-icon"></div>
+                Mia Assistant
+            </div>
+            <div style="color: #9ca3af; font-weight: bold;">−</div>
+        </div>
+        <div class="content">
+            Login / Dashboard Content
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('mia-overlay');
+        const handle = document.getElementById('mia-handle');
+        
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+
+        handle.addEventListener('mousedown', (e) => {
+            const rect = overlay.getBoundingClientRect();
+            dragOffset = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            isDragging = true;
+            handle.style.cursor = 'grabbing';
+            e.preventDefault(); // Important
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const newX = e.clientX - dragOffset.x;
+            const newY = e.clientY - dragOffset.y;
+            
+            overlay.style.left = newX + 'px';
+            overlay.style.top = newY + 'px';
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            handle.style.cursor = 'grab';
+        });
+    </script>
+</body>
+</html>
