@@ -40,5 +40,22 @@ export const meetingService = {
             end_time: endTime.toISOString(),
             description: 'Automatically detected ad-hoc meeting'
         });
+    },
+
+    // Meeting Notes API
+    getMeetingNote: async (meetingId: string): Promise<{ content: string }> => {
+        return api.get(`/meetings/${meetingId}/notes`);
+    },
+
+    saveMeetingNote: async (meetingId: string, content: string): Promise<void> => {
+        await api.post(`/meetings/${meetingId}/notes`, { content });
+    },
+
+    deleteMeetingNote: async (meetingId: string): Promise<void> => {
+        await api.delete(`/meetings/${meetingId}/notes`);
+    },
+
+    smartTranscriptSearch: async (meetingId: string, query: string): Promise<any> => {
+        return api.post('/search/smart', { meeting_id: meetingId, query });
     }
 };

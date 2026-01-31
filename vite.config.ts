@@ -14,7 +14,12 @@ export default defineConfig({
       output: {
         entryFileNames: 'assets/[name].js',
         chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name].[ext]'
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.names && assetInfo.names.some(n => n.endsWith('.css'))) {
+            return 'assets/mia.css';
+          }
+          return 'assets/[name].[ext]';
+        }
       }
     }
   }

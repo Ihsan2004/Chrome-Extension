@@ -30,15 +30,13 @@ export const MeetingList: React.FC = () => {
 
             const isMeetingUrl = isGoogleMeet || isZoom || isTeams;
 
-            // 1. Filter: Show future, active bot, or *matches current page*
-            // This ensures "past" meetings that you are currently attending are still visible.
+            // 1. Filter: Show only future or ongoing meetings (end time not passed)
+            // This ensures only upcoming and current meetings are displayed
             let relevantMeetings = allMeetings.filter(m => {
-                const isFuture = new Date(m.end_time) > now;
-                const isBotActive = m.bot_status === 'joining' || m.bot_status === 'joined';
-                // If we are ON the page of a past meeting, show it so we can use the bot!
-                const isCurrentPage = m.meeting_url && currentUrl.includes(m.meeting_url);
+                const endTime = new Date(m.end_time);
+                const hasNotEnded = endTime > now; // End time hasn't passed yet
 
-                return isFuture || isBotActive || isCurrentPage;
+                return hasNotEnded;
             });
 
             // 2. Ad-Hoc Detection
@@ -125,9 +123,9 @@ export const MeetingList: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="space-y-3">
+            <div className="space-y-4">
                 {[1, 2, 3].map(i => (
-                    <div key={i} className="h-24 bg-gray-800 rounded-xl animate-pulse border border-gray-700"></div>
+                    <div key={i} className="h-32 bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 rounded-2xl animate-pulse border-2 border-purple-200 shadow-md"></div>
                 ))}
             </div>
         );
@@ -135,11 +133,14 @@ export const MeetingList: React.FC = () => {
 
     if (error) {
         return (
-            <div className="text-center py-6">
-                <p className="text-red-400 text-sm">{error}</p>
+            <div className="text-center py-8 bg-red-600 rounded-2xl border-2 border-red-700 shadow-xl">
+                <svg className="w-12 h-12 text-white mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-white text-sm font-bold mb-3">{error}</p>
                 <button
                     onClick={loadMeetings}
-                    className="mt-2 text-blue-400 hover:text-blue-300 hover:underline text-sm"
+                    className="mt-2 px-5 py-2.5 bg-white text-red-600 hover:bg-red-50 rounded-xl text-sm font-bold transition-all shadow-md hover:shadow-lg"
                 >
                     Try Again
                 </button>
@@ -149,15 +150,18 @@ export const MeetingList: React.FC = () => {
 
     if (meetings.length === 0) {
         return (
-            <div className="text-center py-10">
-                <p className="text-gray-500">No upcoming meetings.</p>
+            <div className="text-center py-12 bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 rounded-2xl border-2 border-purple-300 shadow-lg">
+                <svg className="w-20 h-20 text-purple-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p className="text-gray-800 font-black text-lg">No upcoming meetings</p>
+                <p className="text-gray-600 text-sm mt-2 font-semibold">Your schedule is clear!</p>
             </div>
         );
     }
 
     return (
         <div className="pb-4">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Upcoming</h2>
             {meetings.map((meeting) => (
                 <MeetingCard key={meeting.id} meeting={meeting} />
             ))}

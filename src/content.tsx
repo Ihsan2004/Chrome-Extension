@@ -31,7 +31,7 @@ if (!document.getElementById(rootId)) {
     // Inject styles explicitly from the build output
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = chrome.runtime.getURL('assets/Dashboard.css');
+    link.href = chrome.runtime.getURL('assets/mia.css');
     shadowRoot.appendChild(link);
 
     // Also support any dynamic styles if needed, but the main one is Dashboard.css

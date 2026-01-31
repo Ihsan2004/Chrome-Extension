@@ -104,11 +104,25 @@ export const OverlayApp = () => {
             <div style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 2147483647, pointerEvents: 'auto' }}>
                 <button
                     onClick={() => setPersistedOpen(true)}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group font-sans"
-                    style={{ cursor: 'pointer' }}
+                    style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        background: 'linear-gradient(to right, #3b82f6, #9333ea)',
+                        color: 'white',
+                        padding: '12px 24px',
+                        borderRadius: '9999px',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                        border: 'none',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        transition: 'transform 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 >
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    <span className="font-bold text-lg tracking-wide">Mia</span>
+                    <div style={{ width: '10px', height: '10px', background: 'white', borderRadius: '50%' }}></div>
+                    <span style={{ fontWeight: 'bold', fontSize: '18px', letterSpacing: '0.025em' }}>Mia</span>
                 </button>
             </div>
         );
@@ -126,36 +140,36 @@ export const OverlayApp = () => {
                 display: 'flex',
                 flexDirection: 'column'
             }}
-            className="bg-gray-900 rounded-lg shadow-2xl border border-gray-700 overflow-hidden"
+            className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden"
         >
-            {/* DRAG HANDLE - Dark Mode */}
+            {/* DRAG HANDLE */}
             <div
                 onMouseDown={handleMouseDown}
-                className="handle bg-gray-900 p-3 cursor-move flex justify-between items-center border-b border-gray-800 select-none"
+                className="handle bg-gradient-to-r from-blue-500 to-purple-600 p-3 cursor-move flex justify-between items-center select-none"
                 style={{
-                    cursor: 'grab',
-                    backgroundColor: '#111827', // Tailwind gray-900
-                    padding: '12px'
+                    cursor: 'grab'
                 }}
             >
                 <div className="flex items-center gap-2">
-                    <img src={chrome.runtime.getURL("icons/icon16.png")} alt="" className="w-4 h-4 opacity-80" />
-                    <span className="font-semibold text-gray-300 text-sm">Mia Assistant</span>
+                    <img src={chrome.runtime.getURL("icons/icon16.png")} alt="" className="w-4 h-4 brightness-0 invert" />
+                    <span className="font-semibold text-white text-sm tracking-wide">Mia Assistant</span>
                 </div>
                 <div className="flex items-center">
                     <button
                         onMouseDown={(e) => e.stopPropagation()}
                         onClick={() => setPersistedOpen(false)}
-                        className="text-gray-500 hover:text-white px-2 font-bold text-lg transition-colors"
+                        className="text-white/80 hover:text-white px-2 font-bold text-lg transition-colors"
                         style={{ cursor: 'pointer' }}
                     >
-                        &minus;
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+                        </svg>
                     </button>
                 </div>
             </div>
 
-            {/* CONTENT - Dark Mode */}
-            <div className="max-h-[80vh] overflow-y-auto bg-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
+            {/* CONTENT */}
+            <div className="max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {isAuthenticated ? (
                     <Dashboard onLogout={onLogout} />
                 ) : (

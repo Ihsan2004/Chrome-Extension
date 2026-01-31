@@ -52,5 +52,9 @@ export const api = {
             // logic can be improved here if needed
             throw error;
         }
+    },
+
+    delete: async (endpoint: string): Promise<any> => {
+        return sendToBackground(endpoint, 'DELETE');
     }
 };

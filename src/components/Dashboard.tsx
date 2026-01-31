@@ -24,42 +24,43 @@ export const Dashboard: React.FC<DashboardProps> = ({ onLogout }) => {
     };
 
     return (
-        <div className="w-[350px] min-h-[500px] bg-gray-50 text-gray-900 font-sans flex flex-col">
+        <div style={{ width: '380px', minHeight: '550px', background: '#f8f7ff', fontFamily: 'system-ui, -apple-system, sans-serif' }} className="flex flex-col">
             {/* Header */}
-            <header className="bg-white border-b border-gray-200 p-4 flex-shrink-0">
+            <header style={{ background: '#ffffff', borderBottom: '2px solid #e0d4fc', padding: '20px' }} className="flex-shrink-0">
                 <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <img src={chrome.runtime.getURL("icons/icon128.png")} className="w-5 h-5 filter brightness-0 invert" alt="Mia" />
+                    <div className="flex items-center gap-3">
+                        <div style={{ width: '40px', height: '40px', background: '#7c3aed', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <img src={chrome.runtime.getURL("icons/icon128.png")} style={{ width: '24px', height: '24px', filter: 'brightness(0) invert(1)' }} alt="Mia" />
                         </div>
-                        <h1 className="text-lg font-bold text-gray-900">Mia Assistant</h1>
+                        <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#7c3aed', letterSpacing: '-0.5px' }}>mia</h1>
                     </div>
                     <button
                         onClick={handleLogout}
-                        className="text-gray-500 hover:text-red-500 transition-colors p-1"
+                        style={{ padding: '8px', color: '#6b7280', borderRadius: '10px', border: 'none', background: 'transparent', cursor: 'pointer' }}
                         title="Logout"
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                     </button>
                 </div>
 
-                <div>
-                    <p className="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Welcome Back</p>
-                    <p className="text-sm font-bold text-gray-900 truncate">{user?.email}</p>
+                <div style={{ background: '#7c3aed', borderRadius: '12px', padding: '16px' }}>
+                    <p style={{ fontSize: '11px', color: '#ddd6fe', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Welcome back</p>
+                    <p style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email || 'Loading...'}</p>
                 </div>
             </header>
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto p-4">
-                <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-bold text-gray-900">Upcoming Meetings</h3>
+            <div className="flex-1 overflow-y-auto" style={{ padding: '20px' }}>
+                <div className="flex items-center gap-2 mb-4">
+                    <svg style={{ width: '20px', height: '20px', color: '#7c3aed' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <h3 style={{ fontSize: '16px', fontWeight: 900, color: '#1f2937' }}>Upcoming Meetings</h3>
                 </div>
 
-                <div className="space-y-3">
-                    <MeetingList />
-                </div>
+                <MeetingList />
             </div>
         </div>
     );
