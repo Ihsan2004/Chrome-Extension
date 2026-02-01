@@ -1,7 +1,7 @@
 import { storage } from '../utils/storage';
 
-const API_BASE_URL = 'http://localhost:8080/api'; // Local dev
-// const API_BASE_URL = 'https://console.getmia.live/api'; // Prod
+// const API_BASE_URL = 'http://localhost:8080/api'; // Local dev
+const API_BASE_URL = 'https://console.getmia.live/api'; // Prod
 
 const sendToBackground = async (endpoint: string, method: string, body?: any, customHeaders: any = {}) => {
     const token = await storage.get('access_token');
