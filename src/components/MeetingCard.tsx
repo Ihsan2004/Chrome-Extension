@@ -39,18 +39,7 @@ export const MeetingCard: React.FC<MeetingCardProps> = ({ meeting }) => {
         loadNotes();
     }, [meeting.id]);
 
-    // Save notes to API
-    const handleNotesChange = async (value: string) => {
-        setNotes(value);
-        setNotesLoading(true);
-        try {
-            await meetingService.saveMeetingNote(meeting.id, value);
-        } catch (error) {
-            console.error('Failed to save note:', error);
-        } finally {
-            setNotesLoading(false);
-        }
-    };
+
 
     const parseDate = (dateStr: string) => {
         try {
@@ -352,7 +341,7 @@ export const MeetingCard: React.FC<MeetingCardProps> = ({ meeting }) => {
                     <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span>{showNotes ? 'Hide Notes' : 'Add Notes'}</span>
+                    <span>{showNotes ? 'Hide Notes' : 'Personal Notes'}</span>
                     {notes && !showNotes && (
                         <span style={{ marginLeft: 'auto', fontSize: '11px', background: '#7c3aed', color: '#fff', padding: '2px 8px', borderRadius: '10px', fontWeight: 700 }}>Has notes</span>
                     )}
@@ -362,7 +351,7 @@ export const MeetingCard: React.FC<MeetingCardProps> = ({ meeting }) => {
                     <div style={{ marginTop: '10px', padding: '14px', background: '#f5f3ff', borderRadius: '12px', border: '2px solid #c4b5fd' }}>
                         <textarea
                             value={notes}
-                            onChange={(e) => handleNotesChange(e.target.value)}
+                            onChange={(e) => setNotes(e.target.value)}
                             placeholder="Add your personal notes about this meeting..."
                             style={{
                                 width: '100%',
@@ -377,20 +366,49 @@ export const MeetingCard: React.FC<MeetingCardProps> = ({ meeting }) => {
                                 fontWeight: 500,
                                 fontFamily: 'inherit',
                                 boxSizing: 'border-box',
+                                minHeight: '120px'
                             }}
-                            rows={4}
-                            disabled={notesLoading}
+                            rows={6}
                         />
-                        <p style={{ fontSize: '11px', color: '#6d28d9', marginTop: '10px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            {notesLoading ? 'Saving...' : (
-                                <>
-                                    <svg style={{ width: '14px', height: '14px' }} fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                    </svg>
-                                    Notes saved automatically
-                                </>
-                            )}
-                        </p>
+                        <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <button
+                                onClick={async () => {
+                                    setNotesLoading(true);
+                                    try {
+                                        await meetingService.saveMeetingNote(meeting.id, notes);
+                                    } catch (error) {
+                                        console.error('Failed to save note:', error);
+                                    } finally {
+                                        setNotesLoading(false);
+                                    }
+                                }}
+                                disabled={notesLoading}
+                                style={{
+                                    background: notesLoading ? '#d1d5db' : '#7c3aed',
+                                    color: 'white',
+                                    border: 'none',
+                                    padding: '8px 16px',
+                                    borderRadius: '8px',
+                                    fontWeight: 700,
+                                    fontSize: '12px',
+                                    cursor: notesLoading ? 'default' : 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px'
+                                }}
+                            >
+                                {notesLoading ? 'Saving...' : (
+                                    <>
+                                        <svg style={{ width: '14px', height: '14px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                                        Save Notes
+                                    </>
+                                )}
+                            </button>
+
+                            <span style={{ fontSize: '10px', color: '#6d28d9', fontStyle: 'italic' }}>
+                                Don't forget to save!
+                            </span>
+                        </div>
                     </div>
                 )}
             </div>
