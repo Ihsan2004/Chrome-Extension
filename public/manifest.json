@@ -2,7 +2,8 @@
     "manifest_version": 3,
     "name": "Mia Assistant",
     "version": "1.0.0",
-    "description": "Mia Meeting Assistant Extension",
+    "description": "__MSG_appDesc__",
+    "default_locale": "tr",
     "action": {
         "default_title": "Open Mia Assistant",
         "default_icon": {
@@ -24,7 +25,6 @@
         "storage",
         "cookies",
         "activeTab",
-        "scripting",
         "tabs"
     ],
     "host_permissions": [

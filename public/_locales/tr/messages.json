@@ -1,0 +1,10 @@
+{
+    "appName": {
+        "message": "Mia Assistant",
+        "description": "The name of the extension"
+    },
+    "appDesc": {
+        "message": "Mia, toplantı notlarınızı alır, özet çıkarır ve size akıllı içgörüler sunar.",
+        "description": "The description of the extension"
+    }
+}
