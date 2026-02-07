@@ -6,6 +6,7 @@
     "default_locale": "tr",
     "action": {
         "default_title": "Open Mia Assistant",
+        "default_popup": "index.html",
         "default_icon": {
             "16": "icons/icon16.png",
             "48": "icons/icon48.png",

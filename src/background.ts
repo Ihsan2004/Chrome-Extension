@@ -1,4 +1,6 @@
-// Background script to handle extension icon clicks and API proxying
+// Background script to handle API proxying and Auth
+// chrome.action.onClicked is ignored when default_popup is set in manifest.json
+/*
 chrome.action.onClicked.addListener((tab) => {
     console.log("Background: Icon clicked for tab", tab.id);
     if (tab.id) {
@@ -12,6 +14,7 @@ chrome.action.onClicked.addListener((tab) => {
             });
     }
 });
+*/
 
 // API Proxy Listener
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
