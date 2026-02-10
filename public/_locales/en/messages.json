@@ -4,7 +4,7 @@
         "description": "The name of the extension"
     },
     "appDesc": {
-        "message": "Mia provides real-time transcription, smart summaries, and action item tracking for your meetings.",
+        "message": "Mia: Real-time transcription, smart summaries, and action item tracking for your meetings.",
         "description": "The description of the extension"
     }
 }

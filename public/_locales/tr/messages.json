@@ -4,7 +4,7 @@
         "description": "The name of the extension"
     },
     "appDesc": {
-        "message": "Mia, toplantılarınızda gerçek zamanlı transkript, akıllı özet ve görev takibi sağlar.",
+        "message": "Mia: Toplantılarınız için gerçek zamanlı transkript, akıllı özet ve görev takibi.",
         "description": "The description of the extension"
     }
 }
